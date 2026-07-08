@@ -48,11 +48,50 @@ describe("Course Task Tracker API", () => {
         expect(response.body.error).toBeDefined();
     });
 
+    test("GET /api/tasks/:id returns a task", async () => {
+
+        const createResponse = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "Get test",
+                status: "todo"
+            });
+
+        const id = createResponse.body.id;
+        const response = await request(app)
+            .get(`/api/tasks/${id}`)
+            .expect(200);
+
+        expect(response.body.id).toBe(id);
+        expect(response.body.title).toBe("Get test");
+    });
 
     test("GET /api/tasks/:id returns 404 for missing task", async () => {
         await request(app)
             .get("/api/tasks/999")
             .expect(404);
+    });
+
+    test("PUT /api/tasks/:id replaces a task", async () => {
+        const createResponse = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "Old task",
+                status: "todo"
+            });
+
+        const id = createResponse.body.id;
+        const response = await request(app)
+            .put(`/api/tasks/${id}`)
+            .send({
+                title: "Updated Task",
+                status: "done"
+            })
+            .expect(200);
+
+        expect(response.body.title).toBe("Updated Task");
+
+        expect(response.body.status).toBe("done");
     });
 
     test("PATCH /api/tasks/:id updates a task", async () => {
@@ -74,6 +113,22 @@ describe("Course Task Tracker API", () => {
         expect(response.body.status).toBe("done");
     });
 
+    test("PATCH /api/tasks/:id rejjects empty update", async () => {
+        const createResponse = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "Patch test",
+                status: "todo"
+            });
+        const id = createResponse.body.id;
+        const response = await request(app)
+            .patch(`/api/tasks/${id}`)
+            .send({})
+            .expect(400);
+
+        expect(response.body.error).toBeDefined();
+    });
+
 
     test("DELETE /api/tasks/:id deletes a task", async () => {
         const createResponse = await request(app)
@@ -87,6 +142,13 @@ describe("Course Task Tracker API", () => {
         await request(app)
             .delete(`/api/tasks/${id}`)
             .expect(204);
+    });
+
+
+    test("DELETE /api/tasks/:id returns 404 for missing task", async () => {
+        await request(app)
+            .delete("/api/tasks/999")
+            .expect(404);
     });
 
 });
