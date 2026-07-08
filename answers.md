@@ -92,3 +92,18 @@ These are middleware concerns because when they apply to multiple routes, you en
 # PART 7 - Reflection
 
 ---
+
+## 1.) Code vs Conflict  
+### Explain the difference between an Express route implementation and an OpenAPI specification.  
+Answer:  
+An express route implementation is the actual code that runs for the server. It handles requests and responses.The OpenAPI sepecification is the document that describes how the API should work. Its the contract between the server and clients that details how everything should work.
+
+## 2.) Drift  
+### Give two examples of how code and OpenAPI documentation can drift apart
+One example of how code and the OpenAPI documentation can drift is when the server code is altered by adding something like a new route but the OpenAPI file does not get updated. Another example could be if the fields required in a request are changed while not updating the OpenAPI file. Drift occurs when the code and the OpenAPI file are not kept in tune with each other. It is a good habit to update as you make changes as to not leave the contract stale.
+
+## 3.) Client Impact
+### Explain why inaccurate API documentation can cause problems for client developers  
+Answer:  
+Inaccurate API documentation can cause problems for client developers because it can cause them to develop a client that does not work. If they build their client based on information that is no longer right, the requests made may be incorrect or the client may be expecting the wrong response. This would lead to a lot of wasted time for the developers.
+
