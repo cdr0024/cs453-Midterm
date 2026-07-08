@@ -80,7 +80,12 @@ An API is stateless when each request contains the needed context. The server do
 # PART 3-6 - Express API implementation, Middleware, Basic Client, OpenAPI
 
 ---
-### Refer to source code `Express API Implmentation` for implementation
+### Refer to source code in folder `api` for implementation for parts 3-6
+
+### Part 4 Middleware: Briefly explain why these are middleware concerns instead of being repeated manually inside every route.  
+Answer:  
+These are middleware concerns because when they apply to multiple routes, you end up repeating a lot of code inside every route handler. Using middleware keeps the code cleaner and makes it easier to update things in one place instead of having to change every route individually. This also just helps when there is a team of people working on seperate things involving the same codebase.
+
 
 ---
 
