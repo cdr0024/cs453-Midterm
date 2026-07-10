@@ -29,12 +29,14 @@ describe("Course Task Tracker API", () => {
             .post("/api/tasks")
             .send({
                 title: "Test task",
-                status: "todo"
+                course: "CS453",
+                completed: false
             })
             .expect(201);
 
         expect(response.body.title).toBe("Test task");
-        expect(response.body.status).toBe("todo");
+        expect(response.body.course).toBe("CS453");
+        expect(response.body.completed).toBe(false);
     });
 
     test("POST /api/tasks rejects missing fields", async () => {
@@ -48,13 +50,27 @@ describe("Course Task Tracker API", () => {
         expect(response.body.error).toBeDefined();
     });
 
+    test("POST /api/tasks rejects non-boolean for completed", async () => {
+        const response = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "Invalid task",
+                course: "CS453",
+                completed: "false"
+            })
+            .expect(400);
+
+        expect(response.body.error).toBeDefined();
+    });
+
     test("GET /api/tasks/:id returns a task", async () => {
 
         const createResponse = await request(app)
             .post("/api/tasks")
             .send({
                 title: "Get test",
-                status: "todo"
+                course: "CS453",
+                completed: false
             });
 
         const id = createResponse.body.id;
@@ -77,7 +93,8 @@ describe("Course Task Tracker API", () => {
             .post("/api/tasks")
             .send({
                 title: "Old task",
-                status: "todo"
+                course: "CS453",
+                completed: false
             });
 
         const id = createResponse.body.id;
@@ -85,13 +102,15 @@ describe("Course Task Tracker API", () => {
             .put(`/api/tasks/${id}`)
             .send({
                 title: "Updated Task",
-                status: "done"
+                course: "CS453",
+                completed: true
             })
             .expect(200);
 
         expect(response.body.title).toBe("Updated Task");
+        expect(response.body.course).toBe("CS453")
 
-        expect(response.body.status).toBe("done");
+        expect(response.body.completed).toBe(true);
     });
 
     test("PATCH /api/tasks/:id updates a task", async () => {
@@ -100,17 +119,18 @@ describe("Course Task Tracker API", () => {
             .post("/api/tasks")
             .send({
                 title: "Update Test",
-                status: "todo"
+                course: "CS453",
+                completed: false
             });
 
         const id = createResponse.body.id;
         const response = await request(app)
             .patch(`/api/tasks/${id}`)
             .send({
-                status: "done"
+                completed: true
             })
             .expect(200);
-        expect(response.body.status).toBe("done");
+        expect(response.body.completed).toBe(true);
     });
 
     test("PATCH /api/tasks/:id rejjects empty update", async () => {
@@ -118,7 +138,8 @@ describe("Course Task Tracker API", () => {
             .post("/api/tasks")
             .send({
                 title: "Patch test",
-                status: "todo"
+                course: "CS453",
+                completed: false
             });
         const id = createResponse.body.id;
         const response = await request(app)
@@ -135,7 +156,8 @@ describe("Course Task Tracker API", () => {
             .post("/api/tasks")
             .send({
                 title: "Delete test",
-                status: "todo"
+                course: "CS453",
+                completed: false
             });
 
         const id = createResponse.body.id;

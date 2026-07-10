@@ -72,7 +72,8 @@ An API is stateless when each request contains the needed context. The server do
 ```  
 {
     "title": "Complete CS 453 Midterm",
-    "status": "todo"
+    "course": "CS 453
+    "completed": false
 }
 ```
 ---

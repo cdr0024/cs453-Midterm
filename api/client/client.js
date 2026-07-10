@@ -17,7 +17,8 @@ async function runClient() {
         },
         body: JSON.stringify({
             title: "Complete API client",
-            status: "todo"
+            course: "CS453",
+            completed: false
         })
     });
     const newTask = await response.json();
@@ -48,7 +49,7 @@ async function runClient() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            status: "done"
+            completed: true
         })
     });
     data = await response.json();

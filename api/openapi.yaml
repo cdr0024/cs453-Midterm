@@ -80,7 +80,7 @@ paths:
 
       parameters:
         
-        - name: in 
+        - name: id 
           in: path
           required: true
           description: task id 
@@ -96,7 +96,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NewTask"
+                $ref: "#/components/schemas/Task"
 
 
         "404":
@@ -113,7 +113,7 @@ paths:
 
 
       parameters:
-        - name: in 
+        - name: id 
           in: path
           required: true
           description: task id 
@@ -247,7 +247,8 @@ components:
       required:
         - id 
         - title 
-        - status 
+        - course
+        - completed 
 
       properties:
 
@@ -258,10 +259,14 @@ components:
         title:
           type: string
           example: Complete CS 453 midterm
-
-        status:
+        
+        course:  
           type: string
-          example: todo
+          example: CS453
+
+        completed:
+          type: boolean
+          example: false
 
 
     NewTask:
@@ -270,7 +275,8 @@ components:
 
       required:
         - title
-        - status
+        - course
+        - completed
 
       properties:
 
@@ -279,10 +285,14 @@ components:
           type: string
           example: Comeplete CS453 midterm
 
-        status:
-
+        course:
           type: string
-          example: todo
+          example: CS453
+
+        completed:
+
+          type: boolean
+          example: false
 
 
     UpdateTask:
@@ -293,9 +303,13 @@ components:
           type: string
           example: Complete Checkpoint 1
 
-        status:
+        course:
           type: string
-          example: done
+          example: CS453
+
+        completed:
+          type: boolean
+          example: true
 
 
     Error:

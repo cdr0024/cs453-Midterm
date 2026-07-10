@@ -5,8 +5,8 @@ const router = express.Router();
 let nextId = 3;
 
 const tasks = [
-    { id: 1, title: "Complete CS 453 Midterm", status: "todo"},
-    { id: 2, title: "Complete Checkpoint 1", status: "done"}
+    { id: 1, title: "Complete CS 453 Midterm", course: "CS453", completed: false},
+    { id: 2, title: "Complete Checkpoint 1", course: "CS453", completed: true}
 ];
 
 //GET all tasks
@@ -28,12 +28,13 @@ router.get("/:id", (req, res) => {
 
 //POST new task
 router.post("/", validateTask, (req, res) => {
-    const {title, status} = req.body;
+    const {title, course, completed} = req.body;
 
     const newTask = {
         id: nextId++,
-        title, 
-        status
+        title,
+        course, 
+        completed
     };
     tasks.push(newTask);
 
@@ -52,10 +53,11 @@ router.put("/:id", validateTask, (req, res) => {
             error: "cannot find task"
         });
     }
-    const {title, status} = req.body;
+    const {title, course, completed} = req.body;
 
     task.title = title;
-    task.status = status;
+    task.course = course;
+    task.completed = completed;
     res.json(task);
 });
 
@@ -70,12 +72,15 @@ router.patch("/:id", validateTask, (req, res) => {
         });
     }
 
-    const { title, status} = req.body;
+    const { title, course, completed} = req.body;
     if (title !== undefined) {
         task.title = title;
     }
-    if (status !== undefined) {
-        task.status = status;
+    if (course !== undefined) {
+        task.course = course;
+    }
+    if (completed !== undefined) {
+        task.completed = completed;
     }
 
     res. json(task);

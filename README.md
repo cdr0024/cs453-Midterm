@@ -53,27 +53,57 @@ node client.js
 You should see this output after running:  
 
 ```text  
-Checking health...  
-{ status: 'ok' }  
+Checking health...                                                                                                            
+{ status: 'ok' }
 
-Creating task...  
-{ id: 3, title: 'Complete API client', status: 'todo' }
+Creating task...
+{
+  id: 3,
+  title: 'Complete API client',
+  course: 'CS453',
+  completed: false
+}
 
 Getting all tasks...
 [
-  { id: 1, title: 'Complete CS 453 Midterm', status: 'todo' },
-  { id: 2, title: 'Complete Checkpoint 1', status: 'done' },
-  { id: 3, title: 'Complete API client', status: 'todo' }
+  {
+    id: 1,
+    title: 'Complete CS 453 Midterm',
+    course: 'CS453',
+    completed: false
+  },
+  {
+    id: 2,
+    title: 'Complete Checkpoint 1',
+    course: 'CS453',
+    completed: true
+  },
+  {
+    id: 3,
+    title: 'Complete API client',
+    course: 'CS453',
+    completed: false
+  }
 ]
 
 Getting one task...
-{ id: 3, title: 'Complete API client', status: 'todo' }
+{
+  id: 3,
+  title: 'Complete API client',
+  course: 'CS453',
+  completed: false
+}
 
 Updating task...
-{ id: 3, title: 'Complete API client', status: 'done' }
+{
+  id: 3,
+  title: 'Complete API client',
+  course: 'CS453',
+  completed: true
+}
 
 Deleting task...
-Delete status: 204  
+Delete status: 204 
 ```  
 
 ---  
@@ -128,10 +158,10 @@ curl.exe http://localhost:3000/api/tasks
 Response:  
 
 ```json  
-[
-    {"id":1,"title":"Complete CS 453 Midterm","status":"todo"},
-    {"id":2,"title":"Complete Checkpoint 1","status":"done"}
-]  
+[  
+    {"id":1,"title":"Complete CS 453 Midterm","course":"CS453","completed":false},
+    {"id":2,"title":"Complete Checkpoint 1","course":"CS453","completed":true}
+]
 ```  
 
 ---  
@@ -146,7 +176,7 @@ Response:
 
 ```json  
 {
-    "id":1,"title":"Complete CS 453 Midterm","status":"todo"
+    "id":1,"title":"Complete CS 453 Midterm","course":"CS453","completed":false
 }  
 ```  
 
@@ -157,14 +187,14 @@ Response:
 The curl example below use Powershell syntax. I had to use `--%` to prevent powershell from modifying the JSON body
 
 ```powershell  
-curl.exe --% -X POST http://localhost:3000/api/tasks -H "Content-Type: application/json" --data-raw "{\"title\":\"Complete CS 453 Homework\",\"status\":\"todo\"}"  
+curl.exe --% -X POST http://localhost:3000/api/tasks -H "Content-Type: application/json" --data-raw "{\"title\":\"Complete CS 453 Homework\",\"course\":\"CS453\",\"completed\":false}"
 ```  
 
 Response:  
 
 ```json  
 {
-    "id":3,"title":"Complete CS 453 Homework","status":"todo"
+    "id":3,"title":"Complete CS 453 Homework","course":"CS453","completed":false
 }  
 ```  
   
@@ -175,12 +205,12 @@ Response:
 The curl example below use Powershell syntax. I had to use `--%` to prevent powershell from modifying the JSON body  
 
 ```powershell
-curl.exe --% -X PUT http://localhost:3000/api/tasks/3 -H "Content-Type: application/json" --data-raw "{\"title\":\"Updated Task\",\"status\":\"done\"}"  
+curl.exe --% -X PUT http://localhost:3000/api/tasks/3 -H "Content-Type: application/json" --data-raw "{\"title\":\"Updated Task\",\"course\":\"CS453\",\"completed\":true}" 
 ```  
 Response:  
 
 ```json
-{"id":3,"title":"Updated Task","status":"done"}  
+{"id":3,"title":"Updated Task","course":"CS453","completed":true} 
 ```
   
 ---
@@ -190,13 +220,13 @@ Response:
 The curl example below use Powershell syntax. I had to use `--%` to prevent powershell from modifying the JSON body  
 
 ```powershell
-curl.exe --% -X PATCH http://localhost:3000/api/tasks/1 -H "Content-Type: application/json" --data-raw "{\"status\":\"done\"}"  
+curl.exe --% -X PATCH http://localhost:3000/api/tasks/1 -H "Content-Type: application/json" --data-raw "{\"completed\":true}"
 ```  
 
 Response:  
 
 ```json
-{"id":1,"title":"Complete CS 453 Midterm","status":"done"}  
+{"id":1,"title":"Complete CS 453 Midterm","course":"CS453","completed":true}
 ```  
 
 ---  
